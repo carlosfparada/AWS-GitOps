@@ -69,7 +69,7 @@ arista_bgp:
     holdtime: 200
     min_holdtime: 150
 
-# bgp:
+# cisco_bgp:
 #   as_number: '45000'
 #   bgp:
 #     router_id:
