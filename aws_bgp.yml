@@ -59,4 +59,5 @@
     - name: Save running to startup when modified
       arista.eos.eos_config:
         save_when: modified
+      become: true
         
