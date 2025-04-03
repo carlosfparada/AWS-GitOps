@@ -2,7 +2,7 @@
 # CMDB #
 ########
 
-# Arista
+# Arista (sh vlan)
 vlans:
   - name: Vlan_1
     vlan_id: 1
@@ -26,7 +26,7 @@ vlans:
   #   vlan_id: 104
   #   state: active
 
-# Arista
+# Arista (sh interfaces status)
 l2_interfaces:
   - name: Ethernet2
     mode: access
@@ -37,7 +37,7 @@ l2_interfaces:
     access:
       vlan: 20
 
-# Cisco
+# Cisco (sh interfaces summary)
 l3_interfaces:
   - name: Ethernet0/2
     ipv4:

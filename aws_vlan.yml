@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Collect Arista Facts
+- name: Config Arista VLANs
   hosts: arista
   gather_facts: false
   vars_files: vars/cmdb.yml
