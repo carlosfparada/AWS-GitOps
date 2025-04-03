@@ -1,0 +1,195 @@
+---
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
+- name: Set Cisco, Arista passwords and AAP/Netbox setup
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files: vars/main.yml
+  tasks:
+
+  # cat private-key.pem | ansible-vault encrypt_string  --stdin-name 'private_key' --output private-key.vault
+  - ansible.builtin.include_vars: files/private-key.yml
+
+  - name: Copy private key locally
+    ansible.builtin.copy:
+      content: "{{ private_key }}"
+      dest: /tmp/private-key.pem
+      mode: '0600'
+
+  - name: Set Cisco password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
+      responses:
+        # ip-10-0-0-197# configure terminal
+        # ip-10-0-0-197(config)# aaa new-model
+        # ip-10-0-0-197(config)# aaa authentication login default local enable
+        # ip-10-0-0-197(config)# username ec2-user password xxxx
+        # ip-10-0-0-197(config)# exit
+        # ip-10-0-0-197# exit
+        'ip-*':
+          - configure terminal
+          - aaa new-model
+          - aaa authentication login default local enable
+          - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
+          - exit
+          - exit
+    no_log: false # hide passwords on logs
+
+  - name: Set Arista password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
+      responses:
+        # localhost> enable
+        # localhost# configure terminal
+        # localhost(config)# aaa authentication login default local
+        # localhost(config)# username ec2-user secret 0 xxxx
+        # localhost(config)# exit
+        # localhost# exit
+        'localhost*':
+          - enable
+          - configure terminal
+          - aaa authentication login default local
+          - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
+          - exit
+          - exit
+    no_log: false # hide passwords on logs
+
+  # - name: Create an AAP Token
+  #   ansible.platform.token:
+  #     gateway_hostname: "https://{{ groups['aap'][0] }}"
+  #     gateway_username: "admin"
+  #     gateway_password: "{{ aap_password }}"
+  #     gateway_validate_certs: false
+  #     description: 'Token for Netbox access'
+  #     scope: "write"
+  #     state: present
+
+  # - name: Get AAP Job Template ID (Update IP Interface)
+  #   ansible.controller.job_template:
+  #     controller_host: "https://{{ groups['aap'][0] }}"
+  #     # controller_oauthtoken: "{{ aap_token }}"
+  #     controller_username: "admin"
+  #     controller_password: "{{ aap_password }}"
+  #     validate_certs: false
+  #     name: "AWS Netbox: Update IP Interface"
+  #     state: exists
+  #   no_log: false
+  #   register: job_template_ip
+
+  # - name: Get AAP Job Template ID (Update VLAN Interface)
+  #   ansible.controller.job_template:
+  #     controller_host: "https://{{ groups['aap'][0] }}"
+  #     # controller_oauthtoken: "{{ aap_token }}"
+  #     controller_username: "admin"
+  #     controller_password: "{{ aap_password }}"
+  #     validate_certs: false
+  #     name: "AWS Netbox: Update VLAN Interface"
+  #     state: exists
+  #   no_log: false
+  #   register: job_template_vlan_interface
+
+  # - name: Get AAP Job Template ID (Update VLAN)
+  #   ansible.controller.job_template:
+  #     controller_host: "https://{{ groups['aap'][0] }}"
+  #     # controller_oauthtoken: "{{ aap_token }}"
+  #     controller_username: "admin"
+  #     controller_password: "{{ aap_password }}"
+  #     validate_certs: false
+  #     name: "AWS Netbox: Update VLAN"
+  #     state: exists
+  #   no_log: false
+  #   register: job_template_vlan
+
+
+  # - name: Delete an AAP Token
+  #   ansible.platform.token:
+  #     gateway_hostname: "https://{{ groups['aap'][0] }}"
+  #     gateway_username: "admin"
+  #     gateway_password: "{{ aap_password }}"
+  #     gateway_validate_certs: false
+  #     description: 'Token for Netbox access'
+  #     existing_token: "{{ aap_token }}"
+  #     state: absent
+
+
+- name: Provision Arista Device
+  hosts: arista
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+  tasks:
+    - name: Create Banner (Arista)
+      arista.eos.eos_banner:
+        banner: login
+        text: "This is my login Banner, set by Ansible (v1)"
+        state: present
+      become: true
+
+    - name: Create DNS Servers (Arista) 
+      arista.eos.eos_config:
+        lines:
+          - ip name-server 8.8.8.8
+          - ip name-server 8.8.8.9
+      become: true
+
+#     - name: Create Arista VLANs
+#       arista.eos.eos_vlans:
+#         config: "{{ arista_vlans }}"
+#       become: yes
+
+#     - name: Assign Arista VLANs to Interfaces
+#       arista.eos.eos_l2_interfaces:
+#         config: "{{ arista_l2_interfaces }}"
+#       become: yes
+
+#     - name: Create Arista IPv4 Addresses
+#       arista.eos.eos_l3_interfaces:
+#         config: "{{ arista_l3_interfaces }}"
+#       become: yes
+
+- name: Provision Cisco Device
+  hosts: cisco
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+  tasks:
+    - name: Create Banner (Cisco)
+      cisco.ios.ios_banner:
+        banner: login
+        text: "This is my login Banner, set by Ansible (v1)"
+        state: present
+      become: true
+
+    - name: Create DNS Servers (Cisco) 
+      cisco.ios.ios_config:
+        lines:
+          - ip name-server 8.8.8.8
+          - ip name-server 8.8.8.9
+      become: true
+
+#     - name: Create Cisco VLANs
+#       cisco.ios.ios_vlans:
+#         config: "{{ cisco_vlans }}"
+#       become: yes
+
+#     - name: Assign Cisco VLANs to Interfaces
+#       cisco.ios.ios_l2_interfaces:
+#         config: "{{ cisco_l2_interfaces }}"
+#       become: yes
+
+#     - name: Create Cisco IPv4 Addresses
+#       cisco.ios.ios_l3_interfaces:
+#         config: "{{ cisco_l3_interfaces }}"
+#       become: yes
