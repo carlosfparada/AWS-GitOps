@@ -9,13 +9,9 @@
       name: utils_hosts_aws
 
 
-- name: Collect Cisco Facts
+- name: Gather facts from managed hosts
   hosts: cisco
-  gather_facts: false
-  vars:
-    ansible_connection: network_cli
-    ansible_network_os: ios
-    ansible_command_timeout: 300
+  gather_facts: no
   tasks:
     - name: Cisco Facts
       #connection: local
@@ -34,16 +30,15 @@
           - all
       become: true
       register: _ios_facts
-    # - name: Debug IOS facts
-    #   debug:
-    #     var: _ios_facts
-    - name: Set IOS facts
-      set_fact:
-        _facts: "{{ _ios_facts }}"
+    - name: Debug IOS facts
+      debug:
+        var: _ios_facts
+
 
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
+  vars_files: vars/main.yml
   vars:
     ansible_connection: network_cli
     ansible_network_os: eos
@@ -55,9 +50,9 @@
         gather_network_resources: all
       become: true
       register: _eos_facts
-    # - name: Debug EOS facts
-    #   debug:
-    #     var: _eos_facts
-    - name: Set EOS facts
-      set_fact:
-        _facts: "{{ _eos_facts }}"
+    - name: Debug EOS facts
+      debug:
+        var: _eos_facts
+
+
+  
