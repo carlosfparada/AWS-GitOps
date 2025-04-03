@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Basic playbook to display name and ping managed hosts
+- name: Ping managed hosts
   hosts: cisco, arista 
   connection: local
   gather_facts: no
