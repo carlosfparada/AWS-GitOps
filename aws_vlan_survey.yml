@@ -18,6 +18,7 @@
     ansible_network_os: eos
     ansible_command_timeout: 300
   tasks:
+    # sh vlan
     - name: Arista EOS Config VLAN (Survey)
       arista.eos.eos_vlans:
         config: 
