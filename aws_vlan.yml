@@ -12,7 +12,7 @@
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
-  vars_files: vars/main.yml
+  vars_files: vars/cmdb.yml
   vars:
     ansible_connection: network_cli
     ansible_network_os: eos
@@ -57,6 +57,6 @@
         var: _l2_interface.after
 
     - name: Save running to startup when modified
-      cisco.ios.ios_config:
+      arista.eos.eos_config:
         save_when: modified
         
