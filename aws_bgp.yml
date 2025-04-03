@@ -50,7 +50,7 @@
     # sh bgp
     - name: Cisco IOS Config BGP
       cisco.ios.ios_bgp_global:
-        config: "{{ bgp }}"
+        config: "{{ arista_bgp }}"
         state: replaced
       register: _bgp
       become: true
