@@ -20,7 +20,7 @@
   tasks:
     # sh bgp
     - name: Arista EOS Config BGP
-      cisco.ios.ios_bgp_global:
+      arista.eos.eos_bgp_global:
         config: "{{ bgp }}"
         state: replaced
       register: _bgp
@@ -49,7 +49,7 @@
   tasks:
     # sh bgp
     - name: Cisco IOS Config BGP
-      arista.eos.eos_bgp_global:
+      cisco.ios.ios_bgp_global:
         config: "{{ bgp }}"
         state: replaced
       register: _bgp
