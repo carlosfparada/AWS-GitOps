@@ -39,14 +39,12 @@ l2_interfaces:
 
 # Cisco (sh interfaces summary)
 l3_interfaces:
-  - name: Ethernet0/2
+  - name: GigabitEthernet2
     ipv4:
     - address: 10.12.12.12/24
-    - secondary: no
-  - name: Ethernet0/3
+  - name: VirtualPortGroup0
     ipv4:
     - address: 10.13.13.13/24
-    - secondary: no
 
 # Arista & Cisco
 bgp:
