@@ -9,32 +9,6 @@
       name: utils_hosts_aws
 
 
-- name: Gather facts from managed hosts
-  hosts: cisco
-  gather_facts: no
-  tasks:
-    - name: Cisco Facts
-      #connection: local
-      cisco.ios.ios_facts:
-        gather_subset:
-          # - hardware
-          - all
-        gather_network_resources:
-          # - "interfaces"
-          # - "l2_interfaces"
-          # - "l3_interfaces"
-          # - "acl_interfaces"
-          # - "static_routes" 
-          # - "acls" 
-          # - "vlans"
-          - all
-      become: true
-      register: _ios_facts
-    - name: Debug IOS facts
-      debug:
-        var: _ios_facts
-
-
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
@@ -44,15 +18,25 @@
     ansible_network_os: eos
     ansible_command_timeout: 300
   tasks:
-    - name: EOS Facts
-      arista.eos.eos_facts:
-        gather_subset: all
-        gather_network_resources: all
-      become: true
-      register: _eos_facts
-    - name: Debug EOS facts
+    - name: Arista EOS Config VLAN (Survey)
+      arista.eos.eos_vlans:
+        config: 
+          - name: "{{ vlan_name | default('Vlan100') }}"
+            vlan_id: "{{ vlan_id | default(100) }}"
+            state: "{{ vlan_state | default('active') }}" # active, suspend
+            shutdown: enabled # sh vlan brief
+        state: "{{ vlan_oper | default('merged') }}"
+      register: _vlan
+      become: yes
+
+    - name: Arista EOS Debug VLAN before
       debug:
-        var: _eos_facts
+        var: _vlan.before
 
+    - name: Arista EOS Debug VLAN command
+      debug:
+        var: _vlan.commands
 
-  
+    - name: Arista EOS Debug VLAN after
+      debug:
+        var: _vlan.after
