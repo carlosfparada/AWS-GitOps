@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Collect Arista Facts
+- name: Config Cisco IPs
   hosts: arista
   gather_facts: false
   vars_files: vars/cmdb.yml
@@ -19,7 +19,7 @@
     ansible_command_timeout: 300
   tasks:
     # sh vlan
-    - name: Arista EOS Config VLAN (Survey)
+    - name: Arista EOS Config BGP (Survey)
       arista.eos.eos_vlans:
         config: "{{ vlans }}"
         state: overridden
@@ -37,28 +37,3 @@
     - name: Arista EOS Debug VLAN after
       debug:
         var: _vlan.after
-
-    # sh interfaces status
-    - name: Arista EOS Add VLAN to l2 interfaces
-      cisco.ios.ios_l2_interfaces:
-        config: "{{ l2_interfaces }}"
-        state: overridden
-      register: _l2_interface
-      become: true
-
-    - name: Arista EOS Debug VLAN before
-      debug:
-        var: _l2_interface.before
-
-    - name: Arista EOS Debug VLAN command
-      debug:
-        var: _l2_interface.commands
-
-    - name: Arista EOS Debug VLAN after
-      debug:
-        var: _l2_interface.after
-
-    - name: Save running to startup when modified
-      arista.eos.eos_config:
-        save_when: modified
-      become: true
