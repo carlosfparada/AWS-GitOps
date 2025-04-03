@@ -22,7 +22,7 @@
     - name: Cisco IOS Sets IP addresses
       cisco.ios.ios_l3_interfaces:
         config: "{{ l3_interfaces }}"
-          state: overridden
+        state: overridden
       register: _l3_interface
       become: true
 
