@@ -10,8 +10,7 @@
 
 
 - name: Gather facts from managed hosts
-  hosts: cisco, arista 
-  connection: local
+  hosts: cisco
   gather_facts: no
   tasks:
     - name: Cisco Facts
