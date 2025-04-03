@@ -28,11 +28,11 @@ vlans:
 
 # Arista
 l2_interfaces:
-  - name: Ethernet1
+  - name: Ethernet2
     mode: access
     access:
       vlan: 10
-  - name: Ethernet2
+  - name: Ethernet3
     mode: access
     access:
       vlan: 20
