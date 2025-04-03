@@ -18,6 +18,7 @@
     ansible_network_os: eos
     ansible_command_timeout: 300
   tasks:
+    # sh vlan
     - name: Arista EOS Config VLAN (Survey)
       arista.eos.eos_vlans:
         config: "{{ vlans }}"
@@ -37,6 +38,7 @@
       debug:
         var: _vlan.after
 
+    # sh interfaces status
     - name: Arista EOS Add VLAN to l2 interfaces
       cisco.ios.ios_l2_interfaces:
         config: "{{ l2_interfaces }}"
@@ -60,4 +62,3 @@
       arista.eos.eos_config:
         save_when: modified
       become: true
-        
