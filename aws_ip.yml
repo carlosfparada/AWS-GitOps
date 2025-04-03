@@ -19,10 +19,16 @@
     ansible_command_timeout: 300
   tasks:
     # sh vlan
+    - name: Arista EOS Sets IP addresses
+      cisco.ios.ios_l3_interfaces:
+        config: "{{ l3_interfaces }}"
+          state: overridden
+      register: _l3_interface
+      become: true
+
     - name: Arista EOS Config VLAN (Survey)
       arista.eos.eos_vlans:
         config: "{{ vlans }}"
-        state: overridden
       register: _vlan
       become: yes
 
