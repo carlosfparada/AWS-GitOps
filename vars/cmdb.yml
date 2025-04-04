@@ -49,9 +49,9 @@ l3_interfaces:
 # Arista & Cisco (show bgp)
 arista_bgp:
   as_number: '45000'
-  bgp:
-    router_id:
-      address: "{{ ansible_host }}"
+  router_id:
+    address: "{{ ansible_host }}"
+  bgp_params:
     log_neighbor_changes: true
   neighbors:
     - neighbor_address: 192.168.1.11
