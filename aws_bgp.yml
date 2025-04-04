@@ -21,7 +21,7 @@
     # sh bgp
     - name: Arista EOS Config BGP
       arista.eos.eos_bgp_global:
-        config: "{{ arista_bgp }}"
+        config: "{{ bgp }}"
         state: replaced
       register: _bgp
       become: true
@@ -50,7 +50,7 @@
     # sh bgp
     - name: Cisco IOS Config BGP
       cisco.ios.ios_bgp_global:
-        config: "{{ cisco_bgp }}"
+        config: "{{ bgp }}"
         state: replaced
       register: _bgp
       become: true
