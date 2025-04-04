@@ -18,8 +18,7 @@
     ansible_network_os: "{{ os | default('ios)') }}"
     ansible_command_timeout: 300
   tasks:
-    - name: Run '{{ command }}' and parse with '{{ parser }}' (no template)
-      ansible.utils.cli_parse:
+    - name: Run '{{ command }}' on '{{ os }}' and parse with '{{ parser }}'      ansible.utils.cli_parse:
         command: "{{ command }}"
         parser:
           name: "{{ parser }}"
@@ -27,7 +26,11 @@
       when: template is not defined or template != ""
       register: _int_result
 
-    - name: Run '{{ command }}' and parse with '{{ parser }}' (template)
+    - name: Debug '{{ command }}' parsed with '{{ parser }}'
+      debug:
+        var: _int_result.parsed
+
+    - name: Run '{{ command }}' on '{{ os }}' and parse with '{{ parser }}' with '{{ template }}
       ansible.utils.cli_parse:
         command: "{{ command }}"
         parser:
