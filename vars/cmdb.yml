@@ -60,8 +60,8 @@ arista_bgp:
       remote_as: '12000'
     - neighbor_address: 192.168.1.13
       remote_as: '13000'
-    - neighbor_address: 192.168.1.14
-      remote_as: '14000'
+    # - neighbor_address: 192.168.1.14
+    #   remote_as: '14000'
   redistribute:
     - protocol: connected
   timers:
