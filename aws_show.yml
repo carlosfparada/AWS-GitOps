@@ -19,9 +19,9 @@
     ansible_command_timeout: 300
   tasks:
     # https://github.com/networktocode/ntc-templates/tree/master/ntc_templates/templates
-    - name: Capture and parse 'show interface' ntc_templates
+    - name: Capture and parse 'show interfaces' ntc_templates
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.netcommon.ntc_templates
       register: _int_result
@@ -39,9 +39,9 @@
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' textfsm
+    - name: Capture and parse 'show interfaces' textfsm
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.utils.textfsm
       register: _int_result
@@ -50,9 +50,9 @@
         var: _int_result.parsed
 
     # https://github.com/google/textfsm/tree/master
-    - name: Capture and parse 'show interface' textfsm with file
+    - name: Capture and parse 'show interfaces' textfsm with file
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.utils.textfsm
           template_path: templates/ios_show_interface.textfsm
@@ -61,35 +61,35 @@
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' native with file
+    - name: Capture and parse 'show interfaces' native with file
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.netcommon.native
           template_path: templates/ios_show_interface.yaml
         set_fact: _int_result native
-    - name: Debug 'show interface' native with file
+    - name: Debug 'show interfaces' native with file
       debug:
         var: _int_result
 
-    - name: Capture and parse 'show interface' ttp
+    - name: Capture and parse 'show interfaces' ttp
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.utils.ttp
       register: _int_result
-    - name: Debug 'show interface' ttp
+    - name: Debug 'show interfaces' ttp
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' ttp with file
+    - name: Capture and parse 'show interfaces' ttp with file
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.utils.ttp
           template_path: templates/ios_show_interface.ttp
       register: _int_result
-    - name: Debug 'show interface' ttp with file
+    - name: Debug 'show interfaces' ttp with file
       debug:
         var: _int_result.parsed
 
@@ -126,9 +126,9 @@
     ansible_command_timeout: 300
   tasks:
     # https://github.com/networktocode/ntc-templates/tree/master/ntc_templates/templates
-    - name: Capture and parse 'show interface' ntc_templates
+    - name: Capture and parse 'show interfaces' ntc_templates
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.netcommon.ntc_templates
       register: _int_result
@@ -147,9 +147,9 @@
         var: _int_result.parsed
 
     # https://github.com/google/textfsm/tree/master
-    - name: Capture and parse 'show interface' textfsm with file
+    - name: Capture and parse 'show interfaces' textfsm with file
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.utils.textfsm
           template_path: templates/ios_show_interface.textfsm
@@ -158,14 +158,14 @@
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' native with file
+    - name: Capture and parse 'show interfaces' native with file
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.netcommon.native
           template_path: templates/ios_show_interface.yaml
         set_fact: _int_result native
-    - name: Debug 'show interface' native with file
+    - name: Debug 'show interfaces' native with file
       debug:
         var: _int_result
 
