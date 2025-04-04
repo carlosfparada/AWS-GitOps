@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: - name: Show Command parsing (Survey)
+- name: Show Command parsing (Survey)
   hosts: cisco
   gather_facts: false
   vars_files: vars/cmdb.yml
