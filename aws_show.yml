@@ -49,16 +49,16 @@
     #   debug:
     #     var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' native with file
-      ansible.utils.cli_parse:
-        command: "show interface"
-        parser:
-          name: ansible.netcommon.native
-          #template_path: templates/ios_show_interface.yaml
-        set_fact: _int_result native
-    - name: Debug 'show interface' native with file
-      debug:
-        var: _int_result
+    # - name: Capture and parse 'show interface' native with file
+    #   ansible.utils.cli_parse:
+    #     command: "show interface"
+    #     parser:
+    #       name: ansible.netcommon.native
+    #       #template_path: templates/ios_show_interface.yaml
+    #     set_fact: _int_result native
+    # - name: Debug 'show interface' native with file
+    #   debug:
+    #     var: _int_result
 
     - name: Capture and parse 'show interface' ttp
       ansible.utils.cli_parse:
