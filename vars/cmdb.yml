@@ -92,7 +92,7 @@ cisco_bgp:
     min_holdtime: 150
 
 banner:
-  login: "This is my Login Banner, set by Ansible v1"
+  login: "This is my Login Banner, set by Ansible GitOps v1"
 
 dns_servers: 
   - 8.8.8.8
