@@ -15,7 +15,7 @@
   vars_files: vars/cmdb.yml
   vars:
     ansible_connection: network_cli
-    ansible_network_os: "{{ os | default('ios)') }}"
+    ansible_network_os: 'ios' #"{{ os | default('ios)') }}"
     ansible_command_timeout: 300
   tasks:
     - name: Run '{{ command }}' on '{{ os }}' and parse with '{{ parser }}'
