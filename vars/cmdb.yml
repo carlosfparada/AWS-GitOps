@@ -90,7 +90,6 @@ cisco_bgp:
   timers:
     keepalive: 1000
     holdtime: 200
-    min_holdtime: 150
 
 banner:
   login: "This is my Login Banner, set by Ansible v1"
