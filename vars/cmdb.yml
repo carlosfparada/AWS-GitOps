@@ -51,7 +51,7 @@ arista_bgp:
   as_number: '45000'
   # router_id:
   #   address: "{{ ansible_host }}"
-  bgp_params:
+  bgp:
     log_neighbor_changes: true
   neighbors:
     - neighbor_address: 192.168.1.11
