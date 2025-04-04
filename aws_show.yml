@@ -39,15 +39,15 @@
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show interface' textfsm
-      ansible.utils.cli_parse:
-        command: "show interface"
-        parser:
-          name: ansible.utils.textfsm
-      register: _int_result
-    - name: Debug 'show interfaces' textfsm
-      debug:
-        var: _int_result.parsed
+    # - name: Capture and parse 'show interface' textfsm
+    #   ansible.utils.cli_parse:
+    #     command: "show interface"
+    #     parser:
+    #       name: ansible.utils.textfsm
+    #   register: _int_result
+    # - name: Debug 'show interfaces' textfsm
+    #   debug:
+    #     var: _int_result.parsed
 
     - name: Capture and parse 'show interface' native with file
       ansible.utils.cli_parse:
