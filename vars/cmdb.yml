@@ -60,8 +60,8 @@ arista_bgp:
       remote_as: '12000'
     - neighbor_address: 192.168.1.13
       remote_as: '13000'
-    - neighbor_address: 192.168.1.14
-      remote_as: '14000'
+    # - neighbor_address: 192.168.1.14
+    #   remote_as: '14000'
   redistribute:
     - protocol: connected
   timers:
@@ -70,10 +70,10 @@ arista_bgp:
 
 cisco_bgp:
   as_number: '45000'
-  bgp:
-    router_id:
-      address: "{{ ansible_host }}"
-    log_neighbor_changes: true
+  # bgp:
+  #   router_id:
+  #     address: "{{ ansible_host }}"
+  #   log_neighbor_changes: true
   neighbors:
     - neighbor_address: 192.168.1.11
       remote_as: '11000'
