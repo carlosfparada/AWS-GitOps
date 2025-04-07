@@ -61,7 +61,7 @@ bgp:
     holdtime: 200
 
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v5"
+  login: "This is my Login Banner, set by Ansible GitOps v6"
 
 dns_servers: 
   - 8.8.8.8
