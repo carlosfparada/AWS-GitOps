@@ -22,7 +22,7 @@
     - name: Create DNS Servers (Arista) 
       arista.eos.eos_config:
         lines:
-          - ip name-server "{{ item }}"
+          - "ip name-server {{ item }}"
       loop: "{{ dns_servers }}"
       become: true
       register: _dns_servers
@@ -61,7 +61,7 @@
     - name: Create DNS Servers (Cisco) 
       cisco.ios.ios_config:
         lines:
-          - ip name-server "{{ item }}"
+          - "ip name-server {{ item }}"
       loop: "{{ dns_servers }}"
       become: true
       register: _dns_servers
