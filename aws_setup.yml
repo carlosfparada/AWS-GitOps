@@ -61,4 +61,3 @@
           - exit
           - exit
     no_log: false # hide passwords on logs
-
