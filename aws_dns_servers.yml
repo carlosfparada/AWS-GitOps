@@ -58,7 +58,7 @@
       become: true
       register: _dns_servers
 
-    - name: Create DNS Servers (Arista) 
+    - name: Create DNS Servers (Cisco) 
       cisco.ios.ios_config:
         lines:
           - ip name-server "{{ item }}"
