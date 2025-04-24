@@ -64,9 +64,11 @@ bgp:
     keepalive: 1000
     holdtime: 200
 
+# show banner login
 banner:
   login: "This is my Login Banner, set by Ansible GitOps v2"
 
+# show ip name-servers
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
