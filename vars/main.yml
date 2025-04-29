@@ -91,7 +91,7 @@ ec2_cisco_pass: "{{ ansible_password }}"
 
 # login_banner: |
 #   {
-#     "login_banner": "This is my Login Banner, set by Ansible v1"
+#     "login_banner": "This is my Login Banner, set by Ansible GitOps v1"
 #   }
 
 # dns_servers: |

@@ -68,7 +68,7 @@ bgp:
 banner:
   login: "This is my Login Banner, set by Ansible GitOps v2"
 
-# show ip name-servers
+# show banner login
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
