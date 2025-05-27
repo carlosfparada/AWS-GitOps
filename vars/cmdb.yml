@@ -64,11 +64,11 @@ bgp:
     keepalive: 1000
     holdtime: 200
 
-# show banner login
+# Arista & Cisco (show banner login)
 banner:
   login: "This is my Login Banner, set by Ansible GitOps v1"
 
-# show banner login
+# Arista & Cisco (show ip name-server)
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
