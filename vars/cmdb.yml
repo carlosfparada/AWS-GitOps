@@ -47,8 +47,8 @@ l3_interfaces:
     - address: 10.12.12.13/24
   - name: VirtualPortGroup0
     ipv4:
-    #- address: 10.13.13.13/24
-    - address: 10.13.13.14/24
+      - address: 10.13.13.13/24
+    # - address: 10.13.13.14/24
 
 # Arista & Cisco (sh running-config | section bgp)
 bgp:
