@@ -10,9 +10,9 @@ vlans:
   - name: Vlan_10
     vlan_id: 10
     state: active
-  # - name: Vlan_20
-  #   vlan_id: 20
-  #   state: active
+  - name: Vlan_20
+    vlan_id: 20
+    state: active
   # - name: Vlan_101
   #   vlan_id: 101
   #   state: active
@@ -66,10 +66,10 @@ bgp:
 
 # Arista & Cisco (show banner login)
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v1"
+  login: "This is my Login Banner, set by Ansible GitOps v2"
 
 # Arista & Cisco (show ip name-server)
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
-  # - 8.8.8.10
+  - 8.8.8.10
