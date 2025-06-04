@@ -44,7 +44,7 @@ l3_interfaces:
   - name: GigabitEthernet2
     ipv4:
     # - address: 10.12.12.12/24
-    - address: 10.12.12.12/24
+    - address: 10.14.14.14/24
   - name: VirtualPortGroup0
     ipv4:
       - address: 10.13.13.13/24
