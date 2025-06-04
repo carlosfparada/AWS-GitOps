@@ -44,7 +44,7 @@ l3_interfaces:
   - name: GigabitEthernet2
     ipv4:
     # - address: 10.12.12.12/24
-    - address: 10.14.14.14/24
+    - address: 10.15.15.15/24
   - name: VirtualPortGroup0
     ipv4:
       - address: 10.13.13.13/24
@@ -58,18 +58,19 @@ bgp:
       remote_as: '11000'
     - neighbor_address: 192.168.1.12
       remote_as: '12000'
-    # - neighbor_address: 192.168.1.13
-    #   remote_as: '13000'
+    - neighbor_address: 192.168.1.13
+      remote_as: '13000'
   timers:
     keepalive: 1000
     holdtime: 200
 
 # Arista & Cisco (show banner login)
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v2"
+  login: "This is my Login Banner, set by Ansible GitOps v3"
 
 # Arista & Cisco (show ip name-server)
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
   - 8.8.8.10
+  - 8.8.8.11
