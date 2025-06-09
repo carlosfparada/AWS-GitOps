@@ -60,8 +60,8 @@
           - configure terminal
           - aaa authentication login default local
           - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
-          - hostname Arista-1
-        'Arista*':
+        #   - hostname Arista-1
+        # 'Arista*':
           - exit
           - exit
           - exit
