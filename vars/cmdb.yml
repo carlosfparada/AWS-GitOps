@@ -13,9 +13,9 @@ vlans:
   - name: Vlan_20
     vlan_id: 20
     state: active
-  - name: Vlan_101
-    vlan_id: 101
-    state: active
+  # - name: Vlan_101
+  #   vlan_id: 101
+  #   state: active
   # - name: Vlan_102
   #   vlan_id: 102
   #   state: active
@@ -31,13 +31,13 @@ l2_interfaces:
   - name: Ethernet2
     mode: access
     access:
-      #vlan: 10
-      vlan: 20
+      vlan: 10
+      # vlan: 20
   - name: Ethernet3
     mode: access
     access:
-      vlan: 10
-      #vlan: 20
+      # vlan: 10
+      vlan: 20
 
 # Cisco (show ip interface brief)
 l3_interfaces:
@@ -47,8 +47,8 @@ l3_interfaces:
     - address: 10.14.14.14/24
   - name: VirtualPortGroup0
     ipv4:
-      # - address: 10.13.13.13/24
-      - address: 10.15.15.15/24
+      - address: 10.13.13.13/24
+      # - address: 10.15.15.15/24
 
 # Arista & Cisco (sh running-config | section bgp)
 bgp:
@@ -66,7 +66,7 @@ bgp:
 
 # Arista & Cisco (show banner login)
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v1"
+  login: "This is my Login Banner, set by Ansible GitOps v2"
 
 # Arista & Cisco (show ip name-server)
 dns_servers: 
