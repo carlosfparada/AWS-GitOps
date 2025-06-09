@@ -39,8 +39,8 @@
           - aaa new-model
           - aaa authentication login default local enable
           - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
-          - hostname Cisco-1
-        'Cisco*':
+        #   - hostname Cisco-1
+        # 'Cisco*':
           - exit
           - exit
     no_log: false # hide passwords on logs
