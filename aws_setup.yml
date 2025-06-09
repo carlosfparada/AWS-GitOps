@@ -39,7 +39,7 @@
           - aaa new-model
           - aaa authentication login default local enable
           - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
-          - hostname Cisco
+          - hostname Cisco-1
           - exit
           - exit
     no_log: false # hide passwords on logs
@@ -59,7 +59,7 @@
           - configure terminal
           - aaa authentication login default local
           - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
-          - hostname Arista
+          - hostname Arista-1
           - exit
           - exit
     no_log: false # hide passwords on logs
