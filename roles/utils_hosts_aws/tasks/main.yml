@@ -9,7 +9,7 @@
   loop: "{{ groups['all'] }}"
   when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^aap-(.*)$")
 
-- name: Add AAP node to the netbox group
+- name: Add AAP node to the aap group
   add_host:
     name: "{{ node_name }}"
     groups: "aap"
