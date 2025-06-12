@@ -31,13 +31,13 @@ l2_interfaces:
   - name: Ethernet2
     mode: access
     access:
-      vlan: 10
-      # vlan: 20
+      vlan: 1
+      # vlan: 10
   - name: Ethernet3
     mode: access
     access:
-      # vlan: 10
-      vlan: 20
+      vlan: 1
+      # vlan: 20
 
 # Cisco (show ip interface brief)
 l3_interfaces:
