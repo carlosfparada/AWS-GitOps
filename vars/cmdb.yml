@@ -7,12 +7,12 @@ vlans:
   - name: Vlan_1
     vlan_id: 1
     state: active
-  - name: Vlan_10
-    vlan_id: 10
-    state: active
-  - name: Vlan_20
-    vlan_id: 20
-    state: active
+  # - name: Vlan_10
+  #   vlan_id: 10
+  #   state: active
+  # - name: Vlan_20
+  #   vlan_id: 20
+  #   state: active
   # - name: Vlan_101
   #   vlan_id: 101
   #   state: active
