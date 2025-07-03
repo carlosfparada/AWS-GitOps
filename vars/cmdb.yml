@@ -37,7 +37,7 @@ l2_interfaces_juniper:
   - name: ge-0/0/0
     access:
       vlan: 1
-  - name: ge1-0/0/0
+  - name: ge-0/0/1
     access:
       vlan: 1
       # vlan: 20
