@@ -21,7 +21,7 @@
     # sh ip address
     - name: Cisco IOS Sets IP addresses
       cisco.ios.ios_l3_interfaces:
-        config: "{{ l3_interfaces }}"
+        config: "{{ l3_interfaces_cisco }}"
         state: merged
       register: _l3_interface
       become: true
@@ -42,3 +42,54 @@
       cisco.ios.ios_config:
         save_when: modified
       become: true
+
+
+- name: Config Juniper IPs
+  hosts: juniper
+  gather_facts: false
+  vars_files: vars/cmdb.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    # sh ip address
+    - name: Juniper OS Sets IP addresses
+      junipernetworks.junos.junos_l3_interfaces:
+        config: "{{ l3_interfaces_juniper }}"
+        state: merged
+      register: _l3_interface_juniper
+      become: true
+
+    - name: Juniper OS Debug IPs before
+      debug:
+        var: _l3_interface_juniper.before
+
+    - name: Juniper OS Debug IPs command
+      debug:
+        var: _l3_interface_juniper.commands
+
+    - name: Juniper OS Debug IPs after
+      debug:
+        var: _l3_interface_juniper.after
+
+    - name: Cisco XR Enable inncoming traffic
+      junipernetworks.junos.junos_config:
+        lines:
+          - "set security zones security-zone zone interfaces ge-0/0/0"
+          - "set security zones security-zone zone interfaces ge-0/0/1"
+          - "set security zones security-zone zone host-inbound-traffic system-services ping"
+      become: true
+
+    - name: Check Juniper OS correctness of commit configuration
+      junipernetworks.junos.junos_config:
+        check_commit: true
+      become: true
+    # - name: Rollback Juniper OS to last commit
+    #   junipernetworks.junos.junos_config:
+    #     rollback: 0
+    - name: Confirm previous Juniper OS commit
+      junipernetworks.junos.junos_config:
+        confirm_commit: true
+      become: true
+

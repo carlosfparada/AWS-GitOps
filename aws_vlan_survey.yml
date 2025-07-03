@@ -45,3 +45,48 @@
       arista.eos.eos_config:
         save_when: modified
       become: true
+
+
+- name: Config Juniper VLANs
+  hosts: juniper
+  gather_facts: false
+  vars_files: vars/cmdb.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    # sh vlan
+    - name: Juniper OS Config VLAN
+      junipernetworks.junos.junos_vlans:
+        config: 
+          - name: "{{ vlan_name | default('Vlan100') }}"
+            vlan_id: "{{ vlan_id | default(100) }}"
+            state: "{{ vlan_state | default('active') }}" # active, suspend
+        state: "{{ vlan_oper | default('merged') }}"
+      register: _vlan
+      become: yes
+
+    - name: Juniper OS Debug VLANs before
+      debug:
+        var: _vlan.before
+
+    - name: Juniper OS Debug VLANs command
+      debug:
+        var: _vlan.commands
+
+    - name: Juniper OS Debug VLANs before
+      debug:
+        var: _vlan.after
+
+    - name: Check Juniper OS correctness of commit configuration
+      junipernetworks.junos.junos_config:
+        check_commit: true
+      become: true
+    # - name: Rollback Juniper OS to last commit
+    #   junipernetworks.junos.junos_config:
+    #     rollback: 0
+    - name: Confirm previous Juniper OS commit
+      junipernetworks.junos.junos_config:
+        confirm_commit: true
+      become: true
