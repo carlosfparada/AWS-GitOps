@@ -32,14 +32,12 @@ l2_interfaces_arista:
       vlan: 1
       # vlan: 20
 
-# Arista (show interfaces status)
+# Juniper (show interfaces status)
 l2_interfaces_juniper:
   - name: gr-0/0/0
-    mode: access
     access:
       vlan: 1
   - name: ip-0/0/0
-    mode: access
     access:
       vlan: 1
       # vlan: 20
