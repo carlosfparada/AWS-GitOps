@@ -217,6 +217,8 @@
         command: "show interfaces"
         parser:
           name: ansible.netcommon.native
+          command: "show interfaces"
+          os: junos
           # template_path: templates/ios_show_interface.yaml
         set_fact: _int_result native
     - name: Debug 'show interfaces' native with file
