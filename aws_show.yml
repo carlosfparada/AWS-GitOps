@@ -214,7 +214,7 @@
 
     - name: Capture and parse 'show interfaces' native with file
       ansible.utils.cli_parse:
-        command: "show interfaces"
+        commanda: "show interfaces"
         parser:
           name: ansible.netcommon.native
           # template_path: templates/ios_show_interface.yaml
