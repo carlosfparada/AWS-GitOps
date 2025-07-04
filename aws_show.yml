@@ -190,15 +190,15 @@
     #   debug:
     #     var: _int_result.parsed
 
-    - name: Capture and parse 'show vlans' ntc_templates
-      ansible.utils.cli_parse:
-        command: "show vlans"
-        parser:
-          name: ansible.netcommon.ntc_templates
-      register: _int_result
-    - name: Debug 'show vlan' ntc_templates
-      debug:
-        var: _int_result.parsed
+    # - name: Capture and parse 'show vlans' ntc_templates
+    #   ansible.utils.cli_parse:
+    #     command: "show vlans"
+    #     parser:
+    #       name: ansible.netcommon.ntc_templates
+    #   register: _int_result
+    # - name: Debug 'show vlan' ntc_templates
+    #   debug:
+    #     var: _int_result.parsed
 
     # https://github.com/google/textfsm/tree/master
     - name: Capture and parse 'show interface' textfsm with file
