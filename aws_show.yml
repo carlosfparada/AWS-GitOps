@@ -180,9 +180,9 @@
     ansible_command_timeout: 300
   tasks:
     # https://github.com/networktocode/ntc-templates/tree/master/ntc_templates/templates
-    - name: Capture and parse 'show interface' ntc_templates
+    - name: Capture and parse 'show interfaces' ntc_templates
       ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show interfaces"
         parser:
           name: ansible.netcommon.ntc_templates
       register: _int_result
@@ -190,9 +190,9 @@
       debug:
         var: _int_result.parsed
 
-    - name: Capture and parse 'show vlan' ntc_templates
+    - name: Capture and parse 'show vlans' ntc_templates
       ansible.utils.cli_parse:
-        command: "show vlan"
+        command: "show vlans"
         parser:
           name: ansible.netcommon.ntc_templates
       register: _int_result
