@@ -223,7 +223,7 @@
       ansible.utils.cli_parse:
         command: "show vlans"
         parser:
-          name: ansible.netcommon.textfsm
+          name: ansible.utils.textfsm
           os: juniper_junos
           template_path: templates/juniper_junos_show_vlans.textfsm
       register: _int_result
