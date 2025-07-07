@@ -211,7 +211,7 @@
         parser:
           name: ansible.utils.textfsm
       register: _int_result
-    - name: Debug 'show interface' textfsm with file
+    - name: Debug 'show interface' textfsm without file
       debug:
         var: _int_result.parsed
 
