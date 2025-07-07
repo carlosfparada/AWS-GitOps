@@ -212,7 +212,6 @@
         command: "show interfaces"
         parser:
           name: ansible.utils.textfsm
-          command: "show interfaces"
           os: juniper_junos
           template_path: templates/juniper_junos_show_interfaces.textfsm
       register: _int_result
