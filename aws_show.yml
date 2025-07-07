@@ -175,8 +175,8 @@
   gather_facts: false
   vars_files: vars/cmdb.yml
   vars:
-    ansible_connection: network_cli
-    # ansible_connection: netconf
+    # ansible_connection: network_cli
+    ansible_connection: netconf
     ansible_network_os: junos
     ansible_command_timeout: 300
   tasks:
