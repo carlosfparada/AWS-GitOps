@@ -214,6 +214,7 @@
           name: ansible.utils.textfsm
           command: "show interfaces"
           os: juniper_junos
+          template_path: templates/juniper_junos_show_interfaces.textfsm
       register: _int_result
     - name: Debug 'show interface' textfsm without file
       debug:
