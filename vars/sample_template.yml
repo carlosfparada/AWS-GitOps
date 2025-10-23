@@ -1,0 +1,866 @@
+interfaces {
+   ge-a/b/c {
+        description "EI link to sites clients - Ether Client";
+        hierarchical-scheduler;
+        vlan-tagging;
+        mtu 4488;
+        gigether-options {
+            no-auto-negotiation;
+        }
+        unit num_vlan {
+            description "VLN # site client customer_name ";
+            bandwidth 40m;
+            vlan-id num_vlan;
+            family inet {
+                mtu 1500;
+                no-redirects;
+                address access_interco_ip_pe/30;
+            }
+        }
+   }
+}
+
+
+
+
+routing-instances {
+    
+    CUST-VRF-[customer_name] {
+        instance-type vrf;	
+        interface ge-[a/b/c.vlan];
+        route-distinguisher [bgp_RD];
+        vrf-import [ GEN-POL-IN-REJECT-INET6 CUST-POL-IN-customer_name GEN-POL-BOTH-REJECT ];
+        vrf-export [ GEN-POL-OUT-VPN-STATIC-to-MPBGP GEN-POL-OUT-VPN-EXPORT 
+CUST-POL-OUT-customer_name GEN-POL-BOTH-ACCEPT ];
+        routing-options {
+            static {
+                route admin_cpe_ip/32 {
+                    next-hop access_interco_ip_ce;
+                    community no-export;
+		     tag 99997;
+                }
+               route customer_route_ip/mask {
+                    next-hop access_interco_ip_ce;
+                    tag 110;
+                }
+            }
+            maximum-prefixes 300 threshold 80 log-interval 86400;
+            multipath {
+                vpn-unequal-cost equal-external-internal;
+            }
+            auto-export;
+        }
+        protocols {
+            bgp {
+hold-time 180;
+               minimum-hold-time 30;
+                group CPE {
+                    type external;
+                    family inet {
+                        unicast;
+                    }
+                    neighbor access_interco_ip_ce {
+                        minimum-hold-time 15;
+                        import [ GEN-POL-IN-MULTICONNECTED-MCS GEN-POL-BOTH-ACCEPT ];
+                        export [ GEN-POL-OUT-VPN-LOCAL-TO-EBGP GEN-POL-BOTH-ACCEPT ];
+                        peer-as customer_AS;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+policy-options {
+
+community CUST-RT-customer_name members target:bgp_RT;
+community GEN-COM-3215-202 members 3215:202;
+community GEN-COM-10283-120 members 10283:120;
+community GEN-COM-10283-110 members 10283:110;
+    community GEN-COM-10283-20011 members 10283:20011;
+    community GEN-COM-10283-20022 members 10283:20022;
+    community GEN-COM-10283-20033 members 10283:20033;
+    community GEN-COM-10283-20044 members 10283:20044;
+    community GEN-COM-10283-20055 members 10283:20055;
+    community GEN-COM-10283-20066 members 10283:20066;
+    community GEN-COM-10283-20077 members 10283:20077;
+    community GEN-COM-10283-20080 members 10283:20080;
+    community GEN-COM-10283-20088 members 10283:20088;
+    community GEN-COM-10283-20099 members 10283:20099;
+    community GEN-COM-10283-20103 members 10283:20103;
+    community GEN-COM-10283-20104 members 10283:20104;
+    community GEN-COM-10283-20105 members 10283:20105;
+    community GEN-COM-10283-20112 members 10283:20112;
+    community GEN-COM-10283-20186 members 10283:20186;
+    community GEN-COM-10283-20187 members 10283:20187;
+    community GEN-COM-10283-20194 members 10283:20194;
+    community GEN-COM-10283-20404 members 10283:20404;
+    community GEN-COM-10283-20405 members 10283:20405;
+    community GEN-COM-10283-20407 members 10283:20407;
+    community GEN-COM-10283-20408 members 10283:20408;
+    community GEN-COM-10283-20413 members 10283:20413;
+    community GEN-COM-10283-20414 members 10283:20414;
+    community GEN-COM-10283-20415 members 10283:20415;
+    community GEN-COM-10283-20426 members 10283:20426;
+    community GEN-COM-10283-20537 members 10283:20537;
+    community GEN-COM-10283-20593 members 10283:20593;
+    community GEN-COM-10283-2362 members 10283:2362;
+    community GEN-COM-10283-50011 members 10283:50011;
+    community GEN-COM-10283-50012 members 10283:50012;
+    community GEN-COM-10283-50021 members 10283:50021;
+    community GEN-COM-10283-50022 members 10283:50022;
+    community GEN-COM-10283-50031 members 10283:50031;
+    community GEN-COM-10283-50032 members 10283:50032;
+    community GEN-COM-10283-50041 members 10283:50041;
+    community GEN-COM-10283-50042 members 10283:50042;
+    community GEN-COM-10283-50051 members 10283:50051;
+    community GEN-COM-10283-50052 members 10283:50052;
+    community GEN-COM-10283-50061 members 10283:50061;
+    community GEN-COM-10283-50062 members 10283:50062;
+
+
+    community GEN-COM-NO-ADVERTISE members no-advertise;
+
+    community GEN-RT-10283-120000 members target:10283:120000;
+    community GEN-RT-10283-130000 members target:10283:130000;
+    community GEN-RT-10283-140000 members target:10283:140000;
+    community GEN-RT-10283-196364000 members target:10283:196364000;
+    community GEN-RT-10283-196365000 members target:10283:196365000;
+    community GEN-RT-10283-196481000 members target:10283:196481000;
+    community GEN-RT-10283-196744000 members target:10283:196744000;
+    community GEN-RT-10283-196745000 members target:10283:196745000;
+    community GEN-RT-10283-197254000 members target:10283:197254000;
+    community GEN-RT-10283-197255000 members target:10283:197255000;
+    community GEN-RT-10283-197814000 members target:10283:197814000;
+    community GEN-RT-10283-197815000 members target:10283:197815000;
+    community GEN-RT-10283-20000 members target:10283:20000;
+    community GEN-RT-10283-214000 members target:10283:214000;
+    community GEN-RT-10283-244000 members target:10283:244000;
+    community GEN-RT-10283-245000 members target:10283:245000;
+    community GEN-RT-10283-294000 members target:10283:294000;
+    community GEN-RT-10283-295000 members target:10283:295000;
+    community GEN-RT-10283-30000 members target:10283:30000;
+    community GEN-RT-10283-304000 members target:10283:304000;
+    community GEN-RT-10283-305000 members target:10283:305000;
+    community GEN-RT-10283-314000 members target:10283:314000;
+    community GEN-RT-10283-315000 members target:10283:315000;
+    community GEN-RT-10283-344000 members target:10283:344000;
+    community GEN-RT-10283-345000 members target:10283:345000;
+    community GEN-RT-10283-3964000 members target:10283:3964000;
+    community GEN-RT-10283-3965000 members target:10283:3965000;
+    community GEN-RT-10283-4014000 members target:10283:4014000;
+    community GEN-RT-10283-4015000 members target:10283:4015000;
+    community GEN-RT-10283-424000 members target:10283:424000;
+    community GEN-RT-10283-425000 members target:10283:425000;
+    community GEN-RT-10283-434000 members target:10283:434000;
+    community GEN-RT-10283-44000 members target:10283:44000;
+    community GEN-RT-10283-50000 members target:10283:50000;
+    community GEN-RT-10283-504000 members target:10283:504000;
+    community GEN-RT-10283-754000 members target:10283:754000;
+    community GEN-RT-10283-755000 members target:10283:755000;
+    community GEN-RT-10283-8454000 members target:10283:8454000;
+    community GEN-RT-10283-8455000 members target:10283:8455000;
+    community GEN-RT-10283-85000 members target:10283:85000;
+    community GEN-RT-10283-914000 members target:10283:914000;
+    community GEN-RT-10283-915000 members target:10283:915000;
+
+
+
+
+    policy-statement GEN-POL-IN-REJECT-INET6 {
+        term REJECT {
+            from family inet6;
+            then reject;
+        }
+        term NEXT-POLICY {
+            then next policy;
+        }
+    }
+    policy-statement CUST-POL-IN-customer_name {
+        term ACCEPT {
+            from community CUST-RT-customer_name;
+            then accept;
+        }
+        term NEXT-POLICY {
+            then next policy;
+        }
+    }
+    policy-statement CUST-POL-OUT-customer_name {
+        term REJECT-DIRECT {
+            from protocol direct;
+            then reject;
+        }
+        term NEXT-POLICY {
+            then {
+                community add CUST-RT-customer_name;
+                next policy;
+            }
+        }
+    }
+
+    policy-statement GEN-POL-BOTH-REJECT {
+        term REJECT {
+            then reject;
+        }
+    }
+
+
+
+
+
+
+    policy-statement GEN-POL-OUT-VPN-STATIC-to-MPBGP {
+        term 10 {
+            from {
+                protocol [ static access ];
+                tag 110;
+            }
+            then next policy;
+        }
+        term 20 {
+            from {
+                protocol [ static access ];
+                tag 181;
+            }
+            then {
+                local-preference 200;
+                community add GEN-COM-10283-20077;
+                community add GEN-COM-10283-120;
+                next policy;
+            }
+        }
+        term 30 {
+            from {
+                protocol [ static access ];
+                tag 182;
+            }
+            then {
+                local-preference 100;
+                community add GEN-COM-10283-20066;
+                community add GEN-COM-10283-110;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 33 {
+            from {
+                protocol [ static access ];
+                tag 800;
+            }
+            then {
+                local-preference 80;
+                community add GEN-COM-10283-20080;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 34 {
+            from {
+                protocol [ static access ];
+                tag 180;
+            }
+            then {
+                local-preference 80;
+                community add GEN-COM-10283-20080;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 35 {
+            from {
+                protocol [ static access ];
+                tag 183;
+            }
+            then {
+                local-preference 100;
+                community add GEN-COM-10283-20066;
+                community add GEN-COM-10283-110;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 37 {
+            from {
+                protocol [ static access ];
+                tag 184;
+            }
+            then {
+                local-preference 80;
+                community add GEN-COM-10283-20066;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 40 {
+            from {
+                protocol [ static access ];
+                tag 9911;
+            }
+            then {
+                community add GEN-COM-10283-20011;
+                next policy;
+            }
+        }
+        term 50 {
+            from {
+                protocol [ static access ];
+                tag 9922;
+            }
+            then {
+                community add GEN-COM-10283-20022;
+                next policy;
+            }
+        }
+        term 55 {
+            from {
+                protocol [ static access ];
+                tag 9933;
+            }
+            then {
+                community add GEN-COM-10283-20033;
+                next policy;
+            }
+        }
+        term 57 {
+            from {
+                protocol [ static access ];
+                tag 811;
+            }
+            then {
+                local-preference 80;
+                community add GEN-COM-10283-20080;
+                community add GEN-COM-10283-20011;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 60 {
+            from {
+                protocol [ static access ];
+                tag 261;
+            }
+            then {
+                local-preference 100;
+                community add GEN-COM-10283-20066;
+                community add GEN-COM-10283-20011;
+                community add GEN-COM-10283-110;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 70 {
+            from {
+                protocol [ static access ];
+                tag 262;
+            }
+            then {
+                local-preference 100;
+                community add GEN-COM-10283-20066;
+                community add GEN-COM-10283-20022;
+                community add GEN-COM-10283-110;
+                as-path-expand "64544 64544";
+                next policy;
+            }
+        }
+        term 80 {
+            from {
+                protocol [ static access ];
+                tag 271;
+            }
+            then {
+                local-preference 200;
+                community add GEN-COM-10283-20077;
+                community add GEN-COM-10283-20011;
+                community add GEN-COM-10283-120;
+                next policy;
+            }
+        }
+        term 90 {
+            from {
+                protocol [ static access ];
+                tag 272;
+            }
+            then {
+                local-preference 200;
+                community add GEN-COM-10283-20077;
+                community add GEN-COM-10283-20022;
+                community add GEN-COM-10283-120;
+                next policy;
+            }
+        }
+        term 100 {
+            from {
+                protocol [ static access ];
+                tag 281;
+            }
+            then {
+                community add GEN-COM-10283-20088;
+                community add GEN-COM-10283-20011;
+                next policy;
+            }
+        }
+        term 110 {
+            from {
+                protocol [ static access ];
+                tag 282;
+            }
+            then {
+                community add GEN-COM-10283-20088;
+                community add GEN-COM-10283-20022;
+                next policy;
+            }
+        }
+        term 120 {
+            from {
+                protocol [ static access ];
+                tag 291;
+            }
+            then {
+                community add GEN-COM-10283-20099;
+                community add GEN-COM-10283-20011;
+                next policy;
+            }
+        }
+        term 130 {
+            from {
+                protocol [ static access ];
+                tag 292;
+            }
+            then {
+                community add GEN-COM-10283-20099;
+                community add GEN-COM-10283-20022;
+                next policy;
+            }
+        }
+        term 140 {
+            from {
+                protocol [ static access ];
+                tag 500;
+            }
+            then {
+                community add GEN-COM-NO-ADVERTISE;
+                next policy;
+            }
+        }
+        term 150 {
+            from {
+                protocol [ static access ];
+                tag 2362;
+            }
+            then {
+                community add GEN-COM-10283-2362;
+                next policy;
+            }
+        }
+        term 160 {
+            from {
+                protocol [ static access ];
+                tag 50011;
+            }
+            then {
+                community add GEN-COM-10283-50011;
+                next policy;
+            }
+        }
+        term 165 {
+            from {
+                protocol [ static access ];
+                tag 50012;
+            }
+            then {
+                community add GEN-COM-10283-50012;
+                next policy;
+            }
+        }
+        term 170 {
+            from {
+                protocol [ static access ];
+                tag 50021;
+            }
+            then {
+                community add GEN-COM-10283-50021;
+                next policy;
+            }
+        }
+        term 175 {
+            from {
+                protocol [ static access ];
+                tag 50022;
+            }
+            then {
+                community add GEN-COM-10283-50022;
+                next policy;
+            }
+        }
+        term 180 {
+            from {
+                protocol [ static access ];
+                tag 50031;
+            }
+            then {
+                community add GEN-COM-10283-50031;
+                next policy;
+            }
+        }
+        term 185 {
+            from {
+                protocol [ static access ];
+                tag 50032;
+            }
+            then {
+                community add GEN-COM-10283-50032;
+                next policy;
+            }
+        }
+        term 190 {
+            from {
+                protocol [ static access ];
+                tag 50041;
+            }
+            then {
+                community add GEN-COM-10283-50041;
+                next policy;
+            }
+        }
+        term 195 {
+            from {
+                protocol [ static access ];
+                tag 50042;
+            }
+            then {
+                community add GEN-COM-10283-50042;
+                next policy;
+            }
+        }
+        term 200 {
+            from {
+                protocol [ static access ];
+                tag 50051;
+            }
+            then {
+                community add GEN-COM-10283-50051;
+                next policy;
+            }
+        }
+        term 205 {
+            from {
+                protocol [ static access ];
+                tag 50052;
+            }
+            then {
+                community add GEN-COM-10283-50052;
+                next policy;
+            }
+        }
+        term 210 {
+            from {
+                protocol [ static access ];
+                tag 50061;
+            }
+            then {
+                community add GEN-COM-10283-50061;
+                next policy;
+            }
+        }
+        term 215 {
+            from {
+                protocol [ static access ];
+                tag 50062;
+            }
+            then {
+                community add GEN-COM-10283-50062;
+                next policy;
+            }
+        }
+        term 220 {
+            from {
+                protocol [ static access ];
+                tag 251;
+            }
+            then {
+                community add GEN-COM-10283-20055;
+                community add GEN-COM-10283-20011;
+                next policy;
+            }
+        }
+        term 225 {
+            from {
+                protocol [ static access ];
+                tag 252;
+            }
+            then {
+                community add GEN-COM-10283-20055;
+                community add GEN-COM-10283-20022;
+                next policy;
+            }
+        }
+        term DEFAULT-STATIC {
+            from protocol [ static access ];
+            then {
+                community add GEN-COM-3215-202;
+                next policy;
+            }
+        }
+        term NEXT-POLICY {
+            then next policy;
+        }
+    }
+
+
+    policy-statement GEN-POL-OUT-VPN-EXPORT {
+        
+        term 50 {
+            from tag 9385;
+            then {
+                community add GEN-COM-10283-20112;
+                community add GEN-RT-10283-140000;
+                next policy;
+            }
+        }
+        term 60 {
+            from tag 9386;
+            then {
+                community add GEN-COM-10283-20186;
+                community add GEN-COM-10283-20593;
+                community add GEN-RT-10283-3964000;
+                accept;
+            }
+        }
+        term 70 {
+            from tag 9387;
+            then {
+                community add GEN-COM-10283-20187;
+                community add GEN-COM-10283-20593;
+                community add GEN-RT-10283-3964000;
+                community add GEN-RT-10283-4014000;
+                accept;
+            }
+        }
+        term 80 {
+            from tag 9388;
+            then {
+                community add GEN-COM-10283-20112;
+                community add GEN-RT-3215-160000;
+                accept;
+            }
+        }
+        term 130 {
+            from tag 99405;
+            then {
+                community add GEN-COM-10283-20405;
+                community add GEN-RT-10283-294000;
+                next policy;
+            }
+        }
+        term 140 {
+            from community GEN-COM-10283-20405;
+            then {
+                community add GEN-RT-10283-294000;
+                next policy;
+            }
+        }
+        term 150 {
+            from tag 99404;
+            then {
+                community add GEN-COM-10283-20404;
+                community add GEN-RT-10283-244000;
+                accept;
+            }
+        }
+        term 160 {
+            from community GEN-COM-10283-20404;
+            then {
+                community add GEN-RT-10283-244000;
+                accept;
+            }
+        }
+        term 170 {
+            from tag 99408;
+            then {
+                community add GEN-COM-10283-20408;
+                community add GEN-RT-10283-304000;
+                accept;
+            }
+        }
+        term 180 {
+            from community GEN-COM-10283-20408;
+            then {
+                community add GEN-RT-10283-304000;
+                accept;
+            }
+        }
+        term 190 {
+            from tag 99407;
+            then {
+                community add GEN-COM-10283-20407;
+                community add GEN-RT-10283-314000;
+                accept;
+            }
+        }
+        term 200 {
+            from community GEN-COM-10283-20414;
+            then {
+                community add GEN-RT-10283-140000;
+                next policy;
+            }
+        }
+        term 210 {
+            from tag 99415;
+            then {
+                community add GEN-COM-10283-20415;
+                community add GEN-RT-10283-434000;
+                next policy;
+            }
+        }
+        term 220 {
+            from tag 99413;
+            then {
+                community add GEN-COM-10283-20413;
+                community add GEN-RT-10283-424000;
+                accept;
+            }
+        }
+        term 290 {
+            from tag 99425;
+            then {
+                community add GEN-RT-10283-914000;
+                next policy;
+            }
+        }
+        term 300 {
+            from tag 99426;
+            then {
+                community add GEN-COM-10283-20426;
+                community add GEN-RT-10283-754000;
+                accept;
+            }
+        }
+        term 301 {
+            from community GEN-COM-10283-20426;
+            then {
+                community add GEN-RT-10283-754000;
+                accept;
+            }
+        }
+        term 400 {
+            from community GEN-COM-10283-20104;
+            then {
+                community add GEN-RT-10283-30000;
+                community add GEN-RT-10283-197814000;
+                next policy;	
+            }
+        }
+        term 410 {
+            from community GEN-COM-10283-20105;
+            then {
+                community add GEN-RT-10283-30000;
+                community add GEN-RT-10283-197814000;
+                accept;
+            }
+        }
+        term 460 {
+            from tag 99997;
+            then {
+                community add GEN-RT-10283-214000;
+                community add GEN-COM-NO-ADVERTISE;
+                accept;
+            }
+        }
+        term 480 {
+            from tag [ 99996 99998 ];
+            then {
+                community add GEN-COM-10283-20103;
+                community add GEN-RT-10283-44000;
+                community add GEN-RT-10283-197814000;
+                accept;
+            }
+        }
+        term 500 {
+            from tag [ 99995 99999 ];
+            then {
+                community add GEN-COM-10283-20103;
+                community add GEN-RT-10283-30000;
+                community add GEN-RT-10283-197814000;
+                accept;
+            }
+        }
+        term 600 {
+            from tag 99994;
+            then {
+                community add GEN-COM-10283-20194;
+                community add GEN-RT-3215-261144000;
+                accept;
+            }
+        }
+        term NEXT-POLICY {
+            then next policy;
+        }
+    }
+
+    
+    
+    policy-statement GEN-POL-BOTH-ACCEPT {
+        term ACCEPT {
+            then accept;
+        }
+    }
+    policy-statement GEN-POL-OUT-VPN-LOCAL-TO-EBGP {
+        term REJECT-DIRECT {
+            from protocol direct;
+            then reject;
+        }
+        term REJECT-STATIC {
+            from {
+                protocol [ static access ];
+                tag [ 99999 99998 99997 99996 99995 99994 99986 99987 99413 99426 99408 99407 99404 9386 9387 9388 99983 99534 99550 ];
+            }
+            then reject;
+        }
+        term NEXT-POLICY {
+            then next policy;
+        }
+    }
+    
+    policy-statement GEN-POL-IN-MULTICONNECTED-MCS {
+        term 10 {
+            from community GEN-COM-10283-20077;
+            then {
+                local-preference 120;
+                community add GEN-COM-10283-120;
+                next policy;
+            }
+        }
+        term 20 {
+            from community GEN-COM-10283-20066;
+            then {
+                local-preference 110;
+                community add GEN-COM-10283-110;
+                next policy;
+            }
+        }
+        term 30 {
+            from community GEN-COM-10283-20080;
+            then {
+                local-preference 80;
+                next policy;
+            }
+        }
+        term 199 {
+            then next policy;
+        }
+    }
+    
+route-policy RP_EXPORT_PARENT_CUSTOMER
+  apply GEN-POL-OUT-VPN-EXPORT
+  apply CUST-POL-OUT-CUSTOMER
+  apply GEN-POL-BOTH-ACCEPT
+  done
+end-policy
+!
+
+route-policy RP_IMPORT_PARENT_CUSTOMER
+  apply GEN-POL-IN-REJECT-INET6
+  apply CUST-POL-IN-CUSTOMER
+  apply GEN-POL-BOTH-REJECT
+end-policy
