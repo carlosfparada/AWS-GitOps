@@ -6,10 +6,10 @@
 vlans:
   - name: Vlan_1
     vlan_id: 1
-  - name: Vlan_10
-    vlan_id: 10
-  - name: Vlan_20
-    vlan_id: 20
+  # - name: Vlan_10
+  #   vlan_id: 10
+  # - name: Vlan_20
+  #   vlan_id: 20
   # - name: Vlan_101
   #   vlan_id: 101
   # - name: Vlan_102
@@ -46,10 +46,10 @@ l2_interfaces_juniper:
 l3_interfaces_cisco:
   - name: GigabitEthernet2
     ipv4:
-    - address: 10.12.12.13/24
+    - address: 10.12.12.12/24
   - name: GigabitEthernet3
     ipv4:
-      - address: 10.13.13.14/24
+      - address: 10.13.13.13/24
 
 # Juniper (show ; show interface)
 l3_interfaces_juniper:
@@ -76,10 +76,10 @@ bgp:
 
 # Arista & Cisco (show banner login) & Juniper (show system login message)
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v4"
+  login: "This is my Login Banner, set by Ansible GitOps v1"
 
 # Arista & Cisco (show ip name-server) & Juniper (show system name-server)
 dns_servers: 
   - 8.8.8.8
   - 8.8.8.9
-  - 8.8.8.10
+#  - 8.8.8.10
