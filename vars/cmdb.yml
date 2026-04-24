@@ -49,7 +49,7 @@ l3_interfaces_cisco:
     - address: 10.12.12.12/24
   - name: GigabitEthernet3
     ipv4:
-      - address: 10.13.13.13/24
+    - address: 10.13.13.13/24
 
 # Juniper (show ; show interface)
 l3_interfaces_juniper:
