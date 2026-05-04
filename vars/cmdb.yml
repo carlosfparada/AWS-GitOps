@@ -6,10 +6,10 @@
 vlans:
   - name: Vlan_1
     vlan_id: 1
-  - name: Vlan_10
-    vlan_id: 10
-  - name: Vlan_20
-    vlan_id: 20
+  # - name: Vlan_10
+  #   vlan_id: 10
+  # - name: Vlan_20
+  #   vlan_id: 20
   # - name: Vlan_101
   #   vlan_id: 101
   # - name: Vlan_102
@@ -25,11 +25,11 @@ l2_interfaces_arista:
     mode: access
     access:
       # vlan: 1
-      vlan: 10
+      vlan: 1
   - name: Ethernet3
     mode: access
     access:
-      vlan: 20
+      vlan: 1
       #vlan: 20
 
 # Juniper (show interfaces status)
