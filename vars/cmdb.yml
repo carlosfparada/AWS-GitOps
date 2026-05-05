@@ -29,7 +29,7 @@ l2_interfaces_arista:
   - name: Ethernet3
     mode: access
     access:
-      vlan: 1
+      vlan: 20
       #vlan: 20
 
 # Juniper (show interfaces status)
