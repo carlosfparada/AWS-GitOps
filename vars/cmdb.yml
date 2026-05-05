@@ -78,7 +78,7 @@ bgp:
 
 # Arista & Cisco (show banner login) & Juniper (show system login message)
 banner:
-  login: "This is my Login Banner, set by Ansible GitOps v2"
+  login: "This is my Login Banner, set by Ansible GitOps v1"
 
 # Arista & Cisco (show ip name-server) & Juniper (show system name-server)
 dns_servers: 
