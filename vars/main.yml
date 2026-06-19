@@ -107,7 +107,8 @@ ec2_cisco_pass: "{{ ansible_password }}"
 # AMI
 #ec2_arista_image_name: "CloudEOS4.32.2F-971505ec-86ee-48a7-a33b-54295288e797"
 ec2_arista_image_name: "CloudEOS-4.34.2F-971505ec-86ee-48a7-a33b-54295288e797"
-ec2_arista_image_id: ami-0f3d624fef6d9acf3
+#ec2_arista_image_id: ami-0f3d624fef6d9acf3
+ec2_arista_image_id: ami-01cd4fb65138e7f13
 # Volumes
 ec2_arista_volumes:
   - device_name: /dev/xvda
