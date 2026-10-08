@@ -44,6 +44,8 @@
           - exit
           - exit
           - exit
+          - exit
+          - exit
         'Cisco-*':
           - exit
           - exit
