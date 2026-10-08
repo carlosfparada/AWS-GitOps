@@ -41,6 +41,8 @@
           - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
           - hostname Cisco-1
           - exit
+          - exit
+          - exit
         'Cisco-*':
           - exit
           - exit
